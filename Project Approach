@@ -1,0 +1,38 @@
+Approach
+Data Cleaning
+Exploratary Data Analysis
+Analysis of Factors - Visualization & Regression
+
+Data Cleaning
+In this process, data on the different variables will be loaded and clean in preparation for analysis.
+
+#importing necessary libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import re
+import seaborn as sns
+
+1. Fertility Rate
+The fertility rate represents the average number of children a woman gives birth to. This dataset provide information of the fertility rate in Singapore between 1960 and 2018. In making sure fairness across the datasets of various factors, the dataset is filtered to a same time frame which is between 1993 and 2018. The total fertility rate is extracted from the raw dataset as it best describes our project objective.
+
+#Fertility Rate
+birth_rate_data = pd.read_csv('total-fertility-rate-and-reproduction-rate.csv')
+print('\nBefore Data Cleaning')
+print('-'*6)
+display(birth_rate_data.head())
+
+print('\nAfter Data Cleaning')
+print('-'*6)
+
+#Filtering level_1 = 'Total Fertility Rate' and dropping redundant column
+total_fertility_rate = birth_rate_data[birth_rate_data['level_1']=='Total Fertility Rate']
+total_fertility_rate = total_fertility_rate.drop(columns='level_1')
+
+#Filtering year to between 1993 and 2018; Renaming column
+total_fertility_rate = total_fertility_rate[total_fertility_rate['year']>=1993]
+total_fertility_rate = total_fertility_rate[total_fertility_rate['year']<=2018]
+total_fertility_rate = total_fertility_rate.rename(columns={'value': 'total_fertility_rate'})
+
+total_fertility_rate = total_fertility_rate.reset_index(drop=True)
+display(total_fertility_rate.tail())
